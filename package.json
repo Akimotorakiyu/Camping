@@ -1,0 +1,41 @@
+{
+  "name": "template-repo",
+  "version": "0.0.0",
+  "description": "🎬 A pnpm template repo, typescript support out of box with vite and tsx.",
+  "private": true,
+  "devDependencies": {
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@types/node": "^22.4.1",
+    "husky": "^9.1.4",
+    "prettier": "^3.3.3",
+    "pretty-quick": "^4.0.0",
+    "typescript": "5.5.4",
+    "zx": "^8.1.4"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "update-dependencies": "pnpm --recursive update",
+    "update-dependencies-latest": "pnpm --recursive update --latest",
+    "serve": "pnpm run serve-vue",
+    "serve-vue": "pnpm --filter=./packages/example-vue run serve",
+    "serve-react": "pnpm --filter=./packages/example-react run serve",
+    "serve-micro": "pnpm --filter=./packages/example-micro-app run serve",
+    "serve-nuxt": "pnpm --filter=./packages/example-nuxt run serve",
+    "build": "pnpm --filter=./packages/example-vue run build",
+    "dev": "pnpm --filter=./packages/example-node run dev",
+    "dev-fass": "pnpm --filter=./packages/example-fass-node run dev",
+    "mkcert": "mkcert create-cert --ca-key cert/ca.key --ca-cert cert/ca.crt --validity 666 --key cert/temp/cert.key --cert cert/temp/cert.crt --domains \"localhost,127.0.0.1,0.0.0.0\""
+  },
+  "keywords": [],
+  "author": "Akimotorakiyu",
+  "license": "MIT",
+  "dependencies": {
+    "@commitlint/types": "^19.0.3",
+    "lint-staged": "^15.2.9"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
+}
