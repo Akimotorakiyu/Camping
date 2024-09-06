@@ -1,4 +1,4 @@
-import { Application, Sprite, Assets } from 'pixi.js'
+import { Application, Graphics } from 'pixi.js'
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -6,29 +6,28 @@ import { Application, Sprite, Assets } from 'pixi.js'
 export const app = new Application()
 
 // Wait for the Renderer to be available
-await app.init()
+await app.init({
+  antialias: true,
+})
 
-// The application will create a canvas element for you that you
-// can then insert into the DOM
-// load the texture we need
-const texture = await Assets.load('image.png')
+const graphics = new Graphics()
+const spriteList = [
+  {
+    x: 50,
+    y: 50,
+    r: 20,
+  },
+]
 
-// This creates a texture from a 'bunny.png' image
-const bunny = new Sprite(texture)
+spriteList.forEach((item) => {
+  // Rectangle
+  graphics.circle(item.x, item.y, item.r)
+  graphics.fill(0xde3249)
+})
 
-// Setup the position of the bunny
-bunny.x = app.renderer.width / 2
-bunny.y = app.renderer.height / 2
-
-// Rotate around the center
-bunny.anchor.x = 0.5
-bunny.anchor.y = 0.5
-
-// Add the bunny to the scene we are building
-app.stage.addChild(bunny)
+app.stage.addChild(graphics)
 
 // Listen for frame updates
 app.ticker.add(() => {
-  // each frame we spin the bunny around a bit
-  bunny.rotation += 0.01
+  graphics.x += 1
 })
