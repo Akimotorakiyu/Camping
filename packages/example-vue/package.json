@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@template/template": "workspace:*",
-    "vue": "^3.4.38",
+    "pixi.js": "^8.3.4",
+    "vue": "^3.5.3",
     "wujie": "^1.0.22"
   }
 }
