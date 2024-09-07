@@ -1,33 +1,47 @@
-import { Application, Graphics } from 'pixi.js'
-
+import { Application } from 'pixi.js'
+import { Atomic } from './atomic'
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
 export const app = new Application()
+
+// app.stage.worldTransform.translate(0,100)
+// app.stage.worldTransform.scale(1,-1)
 
 // Wait for the Renderer to be available
 await app.init({
   antialias: true,
 })
 
-const graphics = new Graphics()
+app.stage.scale.y = -1
+app.stage.position.y = app.screen.height
 const spriteList = [
-  {
-    x: 50,
-    y: 50,
-    r: 20,
-  },
+  new Atomic(1, 1, 1, 50, 50, 10, 0xaa3249),
+  new Atomic(1, 1, 1, 100, 65, 10, 0xdebb49),
+  new Atomic(1, 1, 1, 70, 70, 10, 0xaa32cc),
 ]
 
 spriteList.forEach((item) => {
-  // Rectangle
-  graphics.circle(item.x, item.y, item.r)
-  graphics.fill(0xde3249)
+  app.stage.addChild(item.graphics)
 })
 
-app.stage.addChild(graphics)
+// spriteList.forEach((item) => {
+//     item.applyMove(0)
+// })
 
 // Listen for frame updates
-app.ticker.add(() => {
-  graphics.x += 1
+app.ticker.add((ticker) => {
+  spriteList.forEach((outter) => {
+    outter.resetForce()
+
+    spriteList.forEach((inner) => {
+      outter.applyForce(inner)
+    })
+
+    outter.applyG()
+  })
+
+  spriteList.forEach((item) => {
+    item.applyMove(ticker.deltaTime * 0.04)
+  })
 })
