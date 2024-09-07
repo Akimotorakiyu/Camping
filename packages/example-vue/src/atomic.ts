@@ -7,7 +7,7 @@ export class Atomic {
     readonly electron?: number,
     x: number = 0,
     y: number = 0,
-    r: number = 0,
+    public r: number = 0,
     fill: FillInput = 0xde3249,
   ) {
     this.graphics.circle(0, 0, r)

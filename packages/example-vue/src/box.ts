@@ -28,27 +28,12 @@ export class CubeBox {
 
   adjustChildrenStatus() {
     this.spriteList.forEach((item) => {
-      const deltaX = item.graphics.x - this.graphics.x
-      const absDeltaX = Math.abs(deltaX)
-      const x = (absDeltaX % this.graphics.width) + this.graphics.x
-
-      const reflexX = Math.floor(absDeltaX / this.graphics.width)
-
-      const dirXChange = (-1) ** reflexX
-      item.vx *= 0.9 ** reflexX * dirXChange
-
-      item.graphics.x = x
-
-      const deltaY = item.graphics.y - this.graphics.y
-      const absDeltaY = Math.abs(deltaY)
-      const y = (absDeltaY % this.graphics.height) + this.graphics.y
-
-      const reflexY = Math.floor(absDeltaY / this.graphics.height)
-
-      const dirYChange = (-1) ** reflexY
-      item.vy *= 0.9 ** reflexY * dirYChange
-
-      item.graphics.y = y
+      const bottom = 0
+      if (item.graphics.y - item.r < bottom) {
+        item.graphics.y =
+          bottom + item.r + Math.abs(item.graphics.y - bottom) * 0.9
+        item.vy = -0.9 * item.vy
+      }
     })
   }
 }
