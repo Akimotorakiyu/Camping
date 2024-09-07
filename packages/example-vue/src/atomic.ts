@@ -91,10 +91,10 @@ export class Atomic {
     this.vx = endVx
     this.vy = endVy
 
-    if (this.graphics.y < 0) {
-      this.graphics.y = Math.abs(this.graphics.y)
-      this.vy = -endVy * 0.94
-    }
+    // if (this.graphics.y < 0) {
+    //   this.graphics.y = Math.abs(this.graphics.y)
+    //   this.vy = -endVy * 0.94
+    // }
   }
 
   gx() {

@@ -1,5 +1,6 @@
 import { Application } from 'pixi.js'
 import { Atomic } from './atomic'
+import { CubeBox } from './box'
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
@@ -15,19 +16,23 @@ await app.init({
 
 app.stage.scale.y = -1
 app.stage.position.y = app.screen.height
+
+const cubeBox = new CubeBox(
+  40,
+  40,
+  app.screen.width - 80,
+  app.screen.height - 80,
+)
+
 const spriteList = [
-  new Atomic(1, 1, 1, 50, 50, 10, 0xaa3249),
-  new Atomic(1, 1, 1, 100, 65, 10, 0xdebb49),
-  new Atomic(1, 1, 1, 70, 70, 10, 0xaa32cc),
+  new Atomic(1, 1, 1, 20, 400, 10, 0xaa3249),
+  new Atomic(1, 1, 1, 40, 300, 10, 0xdebb49),
+  new Atomic(1, 1, 1, 30, 200, 10, 0xaa32cc),
 ]
 
-spriteList.forEach((item) => {
-  app.stage.addChild(item.graphics)
-})
+cubeBox.addChildren(spriteList)
 
-// spriteList.forEach((item) => {
-//     item.applyMove(0)
-// })
+app.stage.addChild(cubeBox.graphics)
 
 // Listen for frame updates
 app.ticker.add((ticker) => {
@@ -44,4 +49,6 @@ app.ticker.add((ticker) => {
   spriteList.forEach((item) => {
     item.applyMove(ticker.deltaTime * 0.04)
   })
+
+  cubeBox.adjustChildrenStatus()
 })
