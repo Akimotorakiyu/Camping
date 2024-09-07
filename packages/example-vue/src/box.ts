@@ -32,7 +32,14 @@ export class CubeBox {
       if (item.graphics.y - item.r < bottom) {
         item.graphics.y =
           bottom + item.r + Math.abs(item.graphics.y - bottom) * 0.9
-        item.vy = -0.9 * item.vy
+        item.vy = 0.9 * Math.abs(item.vy)
+      }
+
+      const left = 0
+
+      if (item.graphics.x - item.r < left) {
+        item.graphics.x = left + item.r + Math.abs(item.graphics.x - left) * 0.9
+        item.vx = 0.9 * Math.abs(item.vx)
       }
     })
   }
