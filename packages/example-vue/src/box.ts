@@ -41,13 +41,12 @@ export class CubeBox {
       //   item.vx = 0.9 * Math.abs(item.vx)
       // }
 
-      // const top = this.h
-      // const itemTop = item.graphics.y + item.r
-      // if ( itemTop > top) {
-      //   item.graphics.y =
-      //   top - (Math.abs(itemTop - top) * 0.9)
-      //   item.vy = -0.9 * Math.abs(item.vy)
-      // }
+      const top = this.h
+      const itemTop = item.graphics.y + item.r
+      if (itemTop > top) {
+        item.graphics.y = top - Math.abs(itemTop - top) * 0.9 - item.r
+        item.vy = -0.9 * Math.abs(item.vy)
+      }
     })
   }
 }
