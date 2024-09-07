@@ -48,6 +48,13 @@ export class CubeBox {
         item.graphics.y = top - Math.abs(itemTop - top) * 0.9 - item.r
         item.vy = -0.9 * Math.abs(item.vy)
       }
+
+      const right = this.w
+      const itemRight = item.graphics.x + item.r
+      if (itemRight > right) {
+        item.graphics.x = right - Math.abs(itemRight - right) * 0.9 - item.r
+        item.vx = -0.9 * Math.abs(item.vx)
+      }
     })
   }
 }

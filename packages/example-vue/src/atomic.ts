@@ -76,7 +76,7 @@ export class Atomic {
 
   applyG() {
     // this.fy += 10 * this.mass
-    this.fx += -10 * this.mass
+    this.fx += 10 * this.mass
   }
 
   applyMove(deltaTime: number) {
