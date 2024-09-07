@@ -1,4 +1,4 @@
-import { FillInput, Graphics, GraphicsContext, GraphicsOptions } from 'pixi.js'
+import { FillInput, Graphics } from 'pixi.js'
 
 export class Atomic {
   constructor(
@@ -58,8 +58,8 @@ export class Atomic {
       throw new Error('粒子不应重叠')
     }
 
-    const forceX = this.eGround(dx) * Math.sign(dx)
-    const forceY = this.eGround(dy) * Math.sign(dy)
+    const forceX = (force * dx) / r
+    const forceY = (force * dy) / r
 
     if (forceX === Infinity || forceY === Infinity) {
       throw new Error('力过大')
