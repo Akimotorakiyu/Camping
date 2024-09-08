@@ -48,7 +48,7 @@ function genAtomic(count: number) {
   return spriteList
 }
 
-const spriteList = [...genAtomic(30)]
+const spriteList = [...genAtomic(2)]
 
 cubeBox.addChildren(spriteList)
 
@@ -67,7 +67,7 @@ app.ticker.add((ticker) => {
   })
 
   spriteList.forEach((item) => {
-    item.applyMove(ticker.deltaTime * 1)
+    item.applyMove(ticker.deltaTime * 100)
   })
 
   cubeBox.adjustChildrenStatus()
