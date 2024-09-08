@@ -20,8 +20,10 @@ export class Atomic {
 
   offset = 0.11
 
+  k = 10 ** 5
+
   eGround(r: number) {
-    return this.ePositiveGround(r) + this.eNegativeGround(r)
+    return (this.ePositiveGround(r) + this.eNegativeGround(r)) * this.k
   }
 
   ePositiveGround(r: number) {
@@ -50,7 +52,7 @@ export class Atomic {
     const dx = atomic.graphics.x - this.graphics.x
     const dy = atomic.graphics.y - this.graphics.y
 
-    const r = dx ** 2 + dy ** 2
+    const r = (dx ** 2 + dy ** 2) ** 0.5
 
     const force = this.eGround(r)
 
@@ -75,7 +77,7 @@ export class Atomic {
   }
 
   applyG() {
-    this.fy += -10 * this.mass
+    // this.fy += -10 * this.mass
     // this.fx += 10 * this.mass
   }
 

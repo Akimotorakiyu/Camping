@@ -28,6 +28,7 @@ const spriteList = [
   new Atomic(1, 1, 1, 20, 400, 10, 0xaa3249),
   new Atomic(1, 1, 1, 40, 300, 10, 0xdebb49),
   new Atomic(1, 1, 1, 30, 200, 10, 0xaa32cc),
+  new Atomic(1, 1, 1, 50, 600, 10, 0xaa32cc),
 ]
 
 cubeBox.addChildren(spriteList)
@@ -47,7 +48,7 @@ app.ticker.add((ticker) => {
   })
 
   spriteList.forEach((item) => {
-    item.applyMove(ticker.deltaTime * 0.04)
+    item.applyMove(ticker.deltaTime * 100)
   })
 
   cubeBox.adjustChildrenStatus()
