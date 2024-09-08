@@ -28,15 +28,19 @@ function genAtomic(count: number) {
   const spriteList = []
 
   for (let index = 0; index < count; index++) {
+    const proton = Math.ceil(Math.random() * 10) + 1
+    const neutron = Math.ceil(Math.random() * 10) - 2 + proton
+    const electron = Math.ceil(Math.random() * 4) - 2 + proton
+    const r = proton + neutron
+
     spriteList.push(
       new Atomic(
-        1,
-        1,
-        1,
+        proton,
+        neutron,
+        electron,
         Math.random() * 300,
         Math.random() * 300,
-        Math.random() * 5 + 5,
-        0xaa3249,
+        r,
       ),
     )
   }
@@ -44,7 +48,7 @@ function genAtomic(count: number) {
   return spriteList
 }
 
-const spriteList = [...genAtomic(10)]
+const spriteList = [...genAtomic(30)]
 
 cubeBox.addChildren(spriteList)
 

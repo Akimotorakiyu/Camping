@@ -4,16 +4,23 @@ export class Atomic {
   constructor(
     readonly proton: number,
     readonly neutron: number,
-    readonly electron?: number,
+    readonly electron: number,
     x: number = 0,
     y: number = 0,
     public r: number = 0,
     fill: FillInput = 0xde3249,
   ) {
+    if (this.e()) {
+      fill = 0x3332aa
+    }
     this.graphics.circle(0, 0, r)
     this.graphics.fill(fill)
     this.graphics.x = x
     this.graphics.y = y
+  }
+
+  e() {
+    return this.proton - this.electron
   }
 
   graphics = new Graphics()
