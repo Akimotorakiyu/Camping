@@ -31,9 +31,10 @@ export class CubeBox {
     // 1 重反弹
     for (let i = 0; bouncedList.length; i++) {
       if (i > 1) {
-        throw new Error('出现超过 1 次反弹情况', {
-          cause: bouncedList,
-        })
+        // throw new Error('出现超过 1 次反弹情况', {
+        //   cause: bouncedList,
+        // })
+        console.warn('出现超过一次反弹的情况')
       }
       bouncedList = bouncedList.filter((item) => {
         const bottom = 0
