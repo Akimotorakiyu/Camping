@@ -67,7 +67,7 @@ app.ticker.add((ticker) => {
   })
 
   spriteList.forEach((item) => {
-    item.applyMove(ticker.deltaTime * 100)
+    item.applyMove(ticker.deltaTime * 10)
   })
 
   cubeBox.adjustChildrenStatus()

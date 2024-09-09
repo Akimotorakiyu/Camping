@@ -27,22 +27,27 @@ export class Atomic {
 
   offset = 0.11
 
-  k = 10 ** 5
+  k = 10 ** 4
 
   eGround(r: number) {
     return (this.ePositiveGround(r) + this.eNegativeGround(r)) * this.k
   }
 
   ePositiveGround(r: number) {
-    return this.ground(r)
+    return this.ground(this.proton, r)
   }
 
   eNegativeGround(r: number) {
-    return -(this.ground(r, this.offset) + this.ground(r, -this.offset)) / 2
+    return (
+      -(
+        this.ground(this.electron, r, this.offset) +
+        this.ground(this.electron, r, -this.offset)
+      ) / 2
+    )
   }
 
-  ground(r: number, offset = 0) {
-    return (this.proton * 1) / (r + offset) ** 2
+  ground(e: number, r: number, offset = 0) {
+    return (e * 1) / (r + offset) ** 2
   }
 
   get mass() {
@@ -56,12 +61,12 @@ export class Atomic {
     if (atomic === this) {
       return 0
     }
-    const dx = atomic.graphics.x - this.graphics.x
-    const dy = atomic.graphics.y - this.graphics.y
+    const dx = this.graphics.x - atomic.graphics.x
+    const dy = this.graphics.y - atomic.graphics.y
 
     const r = (dx ** 2 + dy ** 2) ** 0.5
 
-    const force = this.eGround(r)
+    const force = atomic.eGround(r) * (this.e() + 0.00001)
 
     if (dx === 0 || dy === 0) {
       throw new Error('粒子不应重叠')
