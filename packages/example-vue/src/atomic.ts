@@ -96,8 +96,8 @@ export class Atomic {
   }
 
   applyMove(deltaTime: number) {
-    const endVx = this.gx() * deltaTime + this.vx
-    const endVy = this.gy() * deltaTime + this.vy
+    const endVx = this.ax() * deltaTime + this.vx
+    const endVy = this.ay() * deltaTime + this.vy
 
     const deltaX = (endVx / 2 + this.vx / 2) * deltaTime
     const deltaY = (endVy / 2 + this.vy / 2) * deltaTime
@@ -107,18 +107,13 @@ export class Atomic {
 
     this.vx = endVx
     this.vy = endVy
-
-    // if (this.graphics.y < 0) {
-    //   this.graphics.y = Math.abs(this.graphics.y)
-    //   this.vy = -endVy * 0.94
-    // }
   }
 
-  gx() {
+  ax() {
     return this.fx / this.mass
   }
 
-  gy() {
+  ay() {
     return this.fy / this.mass
   }
 
