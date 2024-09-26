@@ -19,6 +19,10 @@
         </div>
       </div>
     </div>
+    <div v-if="isWin" class="text-center text-lg m-8">{{ userColor }} win!</div>
+    <div class="text-center text-lg m-8">
+      <button @click="reset">reset</button>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -29,14 +33,27 @@ import { genBoard, EPieceType, IPosition, positionWinCheck } from './board'
 const board = ref(genBoard(15, 15))
 
 const userColor = ref<EPieceType>(EPieceType.black)
+const isWin = ref<boolean>(false)
+
+function reset() {
+  board.value = genBoard(15, 15)
+
+  userColor.value = EPieceType.black
+  isWin.value = false
+}
 
 function setPiece(col: IPosition, x: number, y: number) {
+  if (isWin.value) {
+    return
+  }
   if (col.color === EPieceType.empty) {
     col.color = userColor.value
 
     const win = positionWinCheck(board.value, x, y)
-
-    console.log('win?,', win)
+    if (win) {
+      isWin.value = win
+      return
+    }
 
     switch (userColor.value) {
       case EPieceType.black:
