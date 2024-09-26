@@ -1,29 +1,35 @@
 <template>
   <div>
-    <div class="stage">
-      <div v-for="(row, x) in stage" class="row">
-        <div
-          v-for="(col, y) in row"
-          class="coin"
-          @click="
-            () => {
-              if (col.color === ECoin.empty) {
-                col.color = ECoin.white
-              } else if (col.color === ECoin.white) {
-                col.color = ECoin.black
-              } else {
-                col.color = ECoin.empty
-              }
-            }
-          "
-        >
+    <div>
+      <h1 class="text-center text-lg m-8">五子棋 🐲 vs 🐯 争霸赛</h1>
+    </div>
+    <div class="container">
+      <div class="stage">
+        <div v-for="(row, x) in stage" class="row">
           <div
-            v-if="col.color !== ECoin.empty"
-            :class="`pill ${col.color}`"
-          ></div>
+            v-for="(col, y) in row"
+            class="coin"
+            @click="
+              () => {
+                if (col.color === ECoin.empty) {
+                  col.color = ECoin.white
+                } else if (col.color === ECoin.white) {
+                  col.color = ECoin.black
+                } else {
+                  col.color = ECoin.empty
+                }
+              }
+            "
+          >
+            <div
+              v-if="col.color !== ECoin.empty"
+              :class="`pill ${col.color}`"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
+    <div></div>
   </div>
 </template>
 <script setup lang="ts">
@@ -115,5 +121,11 @@ console.log(stage.value)
 .stage {
   position: relative;
   background-color: darkseagreen;
+  width: fit-content;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
 }
 </style>
