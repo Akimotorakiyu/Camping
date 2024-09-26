@@ -9,17 +9,7 @@
           <div
             v-for="(col, y) in row"
             class="coin"
-            @click="
-              () => {
-                if (col.color === EPieceType.empty) {
-                  col.color = EPieceType.white
-                } else if (col.color === EPieceType.white) {
-                  col.color = EPieceType.black
-                } else {
-                  col.color = EPieceType.empty
-                }
-              }
-            "
+            @click="setPiece(col, x, y)"
           >
             <div
               v-if="col.color !== EPieceType.empty"
@@ -35,9 +25,28 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { genBoard, EPieceType } from './board'
+import { genBoard, EPieceType, IPosition } from './board'
 
 const board = ref(genBoard(15, 15))
+
+const userColor = ref<EPieceType>(EPieceType.black)
+
+function setPiece(col: IPosition, x: number, y: number) {
+  if (col.color === EPieceType.empty) {
+    col.color = userColor.value
+
+    switch (userColor.value) {
+      case EPieceType.black:
+        userColor.value = EPieceType.white
+        break
+
+      case EPieceType.white:
+      default:
+        userColor.value = EPieceType.black
+        break
+    }
+  }
+}
 
 console.log(board.value)
 </script>
