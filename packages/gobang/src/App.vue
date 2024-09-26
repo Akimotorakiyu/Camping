@@ -1,22 +1,25 @@
 <template>
   <div>
-    你好世界
     <div class="stage">
       <div v-for="(row, x) in stage" class="row">
-        <div v-for="(col, y) in row" class="coin">
-          <div
-            :class="`pill ${col.color}`"
-            @click="
-              () => {
-                if (col.color === ECoin.empty) {
-                  col.color = ECoin.white
-                } else if (col.color === ECoin.white) {
-                  col.color = ECoin.black
-                } else {
-                  col.color = ECoin.empty
-                }
+        <div
+          v-for="(col, y) in row"
+          class="coin"
+          @click="
+            () => {
+              if (col.color === ECoin.empty) {
+                col.color = ECoin.white
+              } else if (col.color === ECoin.white) {
+                col.color = ECoin.black
+              } else {
+                col.color = ECoin.empty
               }
-            "
+            }
+          "
+        >
+          <div
+            v-if="col.color !== ECoin.empty"
+            :class="`pill ${col.color}`"
           ></div>
         </div>
       </div>
@@ -61,13 +64,39 @@ console.log(stage.value)
 .coin {
   width: 40px;
   height: 40px;
-  background-color: gray;
-  margin: 2px;
+
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background-color: gray;
+    left: 50%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: gray;
+    top: 50%;
+  }
 }
 
 .pill {
+  position: absolute;
+  z-index: 1;
   border-radius: 20px;
-  height: 100%;
+  height: 80%;
+  width: 80%;
+  left: 10%;
+  top: 10%;
+  box-shadow:
+    -2px 2px 4px 0px gray,
+    inset 1px 0px 4px 0px gray;
 }
 
 .white {
@@ -84,6 +113,7 @@ console.log(stage.value)
 }
 
 .stage {
-  background-color: darkgray;
+  position: relative;
+  background-color: darkseagreen;
 }
 </style>
