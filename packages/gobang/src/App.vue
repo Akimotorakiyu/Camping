@@ -52,7 +52,7 @@ function genStage(x: number, y: number) {
   return stage
 }
 
-const stage = ref(genStage(20, 20))
+const stage = ref(genStage(15, 15))
 
 console.log(stage.value)
 </script>
