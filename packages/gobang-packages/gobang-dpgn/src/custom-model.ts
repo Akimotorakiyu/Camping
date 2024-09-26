@@ -1,17 +1,4 @@
 import tf from '@tensorflow/tfjs-node'
-const NUM_PITCH_CLASSES = 2
-
-const model = tf.sequential()
-model.add(tf.layers.dense({ units: 250, activation: 'relu', inputShape: [8] }))
-model.add(tf.layers.dense({ units: 175, activation: 'relu' }))
-model.add(tf.layers.dense({ units: 150, activation: 'relu' }))
-model.add(tf.layers.dense({ units: NUM_PITCH_CLASSES, activation: 'softmax' }))
-
-model.compile({
-  optimizer: tf.train.adam(),
-  loss: 'sparseCategoricalCrossentropy',
-  metrics: ['accuracy'],
-})
 
 export class MyLayer extends tf.layers.Layer {
   constructor() {

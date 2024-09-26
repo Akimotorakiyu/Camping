@@ -78,3 +78,6 @@ export function positionWinCheck(board: IPosition[][], x: number, y: number) {
 
   return co(board, x, y, piece.color)
 }
+
+export const boardSize = 15
+export const winCount = 5
