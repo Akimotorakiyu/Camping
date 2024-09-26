@@ -2,22 +2,37 @@ import { boardSize, winCount } from '@template/gobang-board'
 import tf from '@tensorflow/tfjs-node'
 const NUM_PITCH_CLASSES = 2
 
-const model = tf.sequential()
-model.add(
-  tf.layers.conv2d({
+const input = tf.input({ shape: [boardSize, boardSize] })
+
+const conv2dLayer = tf.layers
+  .conv2d({
     kernelSize: winCount,
     filters: winCount,
     inputShape: [boardSize, boardSize],
-  }),
-)
+  })
+  .apply(input)
 
-model.add(
-  tf.layers.dense({ units: winCount * boardSize ** 2, activation: 'swish' }),
-)
-model.add(tf.layers.dense({ units: 150, activation: 'swish' }))
-model.add(tf.layers.dense({ units: NUM_PITCH_CLASSES, activation: 'softmax' }))
+const dense1 = tf.layers
+  .dense({ units: winCount * boardSize ** 2, activation: 'swish' })
+  .apply(conv2dLayer)
 
-model.compile({
+const dense2 = tf.layers
+  .dense({ units: 150, activation: 'swish' })
+  .apply(dense1)
+
+const posOutPut = tf.layers
+  .dense({ units: NUM_PITCH_CLASSES, activation: 'softmax' })
+  .apply(dense2)
+const qValue = tf.layers
+  .dense({ units: 1, activation: 'softmax' })
+  .apply(posOutPut)
+
+export const myModel = tf.model({
+  inputs: input,
+  outputs: [qValue as tf.SymbolicTensor],
+})
+
+myModel.compile({
   optimizer: tf.train.adam(),
   loss: 'sparseCategoricalCrossentropy',
   metrics: ['accuracy'],

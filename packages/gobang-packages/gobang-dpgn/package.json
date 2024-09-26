@@ -9,6 +9,7 @@
   "dependencies": {
     "@template/gobang-board": "workspace:*",
     "@tensorflow/tfjs": "^4.21.0",
+    "@tensorflow/tfjs-data": "^4.21.0",
     "@tensorflow/tfjs-layers": "^4.21.0",
     "@tensorflow/tfjs-node": "^4.21.0"
   }
