@@ -4,8 +4,8 @@
       <h1 class="text-center text-lg m-8">五子棋 🐲 vs 🐯 争霸赛</h1>
     </div>
     <div class="container">
-      <div class="stage">
-        <div v-for="(row, x) in stage" class="row">
+      <div class="board">
+        <div v-for="(row, x) in board" class="row">
           <div
             v-for="(col, y) in row"
             class="coin"
@@ -35,11 +35,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { genStage, EPieceType } from './board'
+import { genBoard, EPieceType } from './board'
 
-const stage = ref(genStage(15, 15))
+const board = ref(genBoard(15, 15))
 
-console.log(stage.value)
+console.log(board.value)
 </script>
 
 <style lang="css">
@@ -94,7 +94,7 @@ console.log(stage.value)
   justify-content: center;
 }
 
-.stage {
+.board {
   position: relative;
   background-color: darkseagreen;
   width: fit-content;

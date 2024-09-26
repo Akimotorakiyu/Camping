@@ -8,8 +8,8 @@ export interface IPosition {
   color: EPieceType
 }
 
-export function genStage(x: number, y: number) {
-  const stage: IPosition[][] = []
+export function genBoard(x: number, y: number) {
+  const board: IPosition[][] = []
 
   for (let index = 0; index < x; index++) {
     const row: IPosition[] = []
@@ -18,8 +18,8 @@ export function genStage(x: number, y: number) {
         color: EPieceType.empty,
       })
     }
-    stage.push(row)
+    board.push(row)
   }
 
-  return stage
+  return board
 }
