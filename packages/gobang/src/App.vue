@@ -11,18 +11,18 @@
             class="coin"
             @click="
               () => {
-                if (col.color === ECoin.empty) {
-                  col.color = ECoin.white
-                } else if (col.color === ECoin.white) {
-                  col.color = ECoin.black
+                if (col.color === EPieceType.empty) {
+                  col.color = EPieceType.white
+                } else if (col.color === EPieceType.white) {
+                  col.color = EPieceType.black
                 } else {
-                  col.color = ECoin.empty
+                  col.color = EPieceType.empty
                 }
               }
             "
           >
             <div
-              v-if="col.color !== ECoin.empty"
+              v-if="col.color !== EPieceType.empty"
               :class="`pill ${col.color}`"
             ></div>
           </div>
@@ -35,31 +35,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-enum ECoin {
-  'black' = 'black',
-  'white' = 'white',
-  'empty' = 'empty',
-}
-
-interface IPosition {
-  color: ECoin
-}
-
-function genStage(x: number, y: number) {
-  const stage: IPosition[][] = []
-
-  for (let index = 0; index < x; index++) {
-    const row: IPosition[] = []
-    for (let index = 0; index < y; index++) {
-      row.push({
-        color: ECoin.empty,
-      })
-    }
-    stage.push(row)
-  }
-
-  return stage
-}
+import { genStage, EPieceType } from './board'
 
 const stage = ref(genStage(15, 15))
 
