@@ -5,9 +5,9 @@
     </div>
     <div class="container">
       <div class="board">
-        <div v-for="(row, x) in board" class="row">
+        <div v-for="(row, y) in board" class="row">
           <div
-            v-for="(col, y) in row"
+            v-for="(col, x) in row"
             class="coin"
             @click="setPiece(col, x, y)"
           >
@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { genBoard, EPieceType, IPosition } from './board'
+import { genBoard, EPieceType, IPosition, positionWinCheck } from './board'
 
 const board = ref(genBoard(15, 15))
 
@@ -34,6 +34,10 @@ const userColor = ref<EPieceType>(EPieceType.black)
 function setPiece(col: IPosition, x: number, y: number) {
   if (col.color === EPieceType.empty) {
     col.color = userColor.value
+
+    const win = positionWinCheck(board.value, x, y)
+
+    console.log('win?,', win)
 
     switch (userColor.value) {
       case EPieceType.black:
