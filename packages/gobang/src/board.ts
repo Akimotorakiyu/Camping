@@ -28,58 +28,21 @@ export function count(
   board: IPosition[][],
   x: number,
   y: number,
-  dx: number,
-  dy: number,
+  [dx, dy]: [number, number],
   pieceType: EPieceType,
 ): number {
   const piece = board[y][x]
   if (piece.color === pieceType) {
-    return 1 + count(board, x + dx, y + dy, dx, dy, pieceType)
+    return 1 + count(board, x + dx, y + dy, [dx, dy], pieceType)
   }
   return 0
 }
 
-const directionList = [
-  {
-    side1: {
-      dx: 1,
-      dy: 0,
-    },
-    side2: {
-      dx: -1,
-      dy: 0,
-    },
-  },
-  {
-    side1: {
-      dx: 0,
-      dy: 1,
-    },
-    side2: {
-      dx: 0,
-      dy: -1,
-    },
-  },
-  {
-    side1: {
-      dx: 1,
-      dy: 1,
-    },
-    side2: {
-      dx: -1,
-      dy: -1,
-    },
-  },
-  {
-    side1: {
-      dx: -1,
-      dy: 1,
-    },
-    side2: {
-      dx: 1,
-      dy: -1,
-    },
-  },
+const directions = [
+  [1, 0],
+  [1, 1],
+  [0, 1],
+  [-1, 1],
 ]
 
 export function co(
@@ -88,24 +51,23 @@ export function co(
   y: number,
   pieceType: EPieceType,
 ) {
-  return directionList.some(({ side1, side2 }) => {
+  return directions.some(([dx, dy]) => {
+    const [inversDx, inversDy] = [dx * -1, dy * -1]
     const piece = board[y][x]
     if (piece.color === pieceType) {
       const countNumber =
         1 +
+        count(board, x + dx, y + dy, [dx, dy], pieceType) +
         count(
           board,
-          x + side1.dx,
-          y + side1.dy,
-          side1.dx,
-          side1.dy,
+          x + inversDx,
+          y + inversDy,
+          [inversDx, inversDy],
           pieceType,
-        ) +
-        count(board, x + side2.dx, y + side2.dy, side2.dx, side2.dy, pieceType)
+        )
       if (countNumber >= 5) {
         return true
       }
-
       return false
     }
   })
