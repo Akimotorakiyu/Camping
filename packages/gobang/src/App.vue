@@ -3,7 +3,7 @@
     <div>
       <h1 class="text-center text-lg m-8">五子棋 🐲 vs 🐯 争霸赛</h1>
     </div>
-    <div class="container">
+    <div class="board-container">
       <div class="board">
         <div v-for="(row, y) in board" class="row">
           <div
@@ -19,7 +19,6 @@
         </div>
       </div>
     </div>
-    <div></div>
   </div>
 </template>
 <script setup lang="ts">
@@ -113,7 +112,7 @@ console.log(board.value)
   width: fit-content;
 }
 
-.container {
+.board-container {
   display: flex;
   justify-content: center;
 }
