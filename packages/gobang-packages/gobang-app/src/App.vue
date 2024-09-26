@@ -28,7 +28,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { genBoard, EPieceType, IPosition, positionWinCheck } from './board'
+import {
+  genBoard,
+  EPieceType,
+  IPosition,
+  positionWinCheck,
+} from '@template/gobang-board'
 
 const board = ref(genBoard(15, 15))
 

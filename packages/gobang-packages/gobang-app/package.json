@@ -21,8 +21,8 @@
     "windicss": "^3.5.6"
   },
   "dependencies": {
-    "@template/template": "workspace:*",
-    "pixi.js": "^8.3.4",
+    "@template/gobang-board": "workspace:*",
+    "@tensorflow/tfjs": "^4.21.0",
     "vue": "^3.5.3",
     "wujie": "^1.0.22"
   }
