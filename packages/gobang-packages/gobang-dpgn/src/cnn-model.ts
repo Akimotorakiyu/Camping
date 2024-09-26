@@ -20,12 +20,13 @@ const dense2 = tf.layers
   .dense({ units: 150, activation: 'swish' })
   .apply(dense1)
 
-const posOutPut = tf.layers
+const actionOutPut = tf.layers
   .dense({ units: NUM_PITCH_CLASSES, activation: 'softmax' })
   .apply(dense2)
+
 const qValue = tf.layers
   .dense({ units: 1, activation: 'softmax' })
-  .apply(posOutPut)
+  .apply(actionOutPut)
 
 export const myModel = tf.model({
   inputs: input,
