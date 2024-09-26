@@ -24,9 +24,15 @@ const actionOutPut = tf.layers
   .dense({ units: NUM_PITCH_CLASSES, activation: 'softmax' })
   .apply(dense2)
 
-const qValue = tf.layers
-  .dense({ units: 1, activation: 'softmax' })
-  .apply(actionOutPut)
+const dense3 = tf.layers
+  .dense({ units: winCount * boardSize ** 2, activation: 'swish' })
+  .apply([actionOutPut as tf.SymbolicTensor, dense2 as tf.SymbolicTensor])
+
+const dense4 = tf.layers
+  .dense({ units: 150, activation: 'swish' })
+  .apply(dense3)
+
+const qValue = tf.layers.dense({ units: 1, activation: 'swish' }).apply(dense4)
 
 export const myModel = tf.model({
   inputs: input,
