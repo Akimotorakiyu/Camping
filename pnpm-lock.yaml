@@ -103,6 +103,52 @@ importers:
         specifier: ^4.21.0
         version: 4.21.0(encoding@0.1.13)(seedrandom@3.0.5)
 
+  packages/pac-man/pac-app:
+    dependencies:
+      '@template/pac-board':
+        specifier: workspace:*
+        version: link:../pac-board
+      '@tensorflow/tfjs':
+        specifier: ^4.21.0
+        version: 4.21.0(encoding@0.1.13)(seedrandom@3.0.5)
+      vue:
+        specifier: ^3.5.3
+        version: 3.5.3(typescript@5.5.4)
+      wujie:
+        specifier: ^1.0.22
+        version: 1.0.22
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: ^5.1.2
+        version: 5.1.2(vite@5.4.1(@types/node@22.4.1)(terser@5.31.6))(vue@3.5.3(typescript@5.5.4))
+      '@vitejs/plugin-vue-jsx':
+        specifier: ^4.0.1
+        version: 4.0.1(vite@5.4.1(@types/node@22.4.1)(terser@5.31.6))(vue@3.5.3(typescript@5.5.4))
+      '@vue/compiler-sfc':
+        specifier: ^3.4.38
+        version: 3.5.3
+      postcss:
+        specifier: ^8.4.41
+        version: 8.4.45
+      postcss-nested:
+        specifier: ^6.2.0
+        version: 6.2.0(postcss@8.4.45)
+      vite:
+        specifier: ^5.4.1
+        version: 5.4.1(@types/node@22.4.1)(terser@5.31.6)
+      vite-plugin-windicss:
+        specifier: ^1.9.3
+        version: 1.9.3(vite@5.4.1(@types/node@22.4.1)(terser@5.31.6))
+      windicss:
+        specifier: ^3.5.6
+        version: 3.5.6
+
+  packages/pac-man/pac-board:
+    dependencies:
+      '@template/core':
+        specifier: workspace:*
+        version: link:../../template/core
+
   packages/sprite:
     dependencies:
       '@template/template':
