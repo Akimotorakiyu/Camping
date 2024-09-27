@@ -24,9 +24,17 @@ const actionOutPut = tf.layers
   .dense({ units: NUM_PITCH_CLASSES, activation: 'softmax' })
   .apply(dense2)
 
+const actionOutPut2 = tf.layers
+  .dense({ units: NUM_PITCH_CLASSES, activation: 'softmax' })
+  .apply(dense2)
+
 const dense3 = tf.layers
   .dense({ units: winCount * boardSize ** 2, activation: 'swish' })
-  .apply([actionOutPut as tf.SymbolicTensor, dense2 as tf.SymbolicTensor])
+  .apply([
+    actionOutPut as tf.SymbolicTensor,
+    actionOutPut2 as tf.SymbolicTensor,
+    dense2 as tf.SymbolicTensor,
+  ])
 
 const dense4 = tf.layers
   .dense({ units: 150, activation: 'swish' })
