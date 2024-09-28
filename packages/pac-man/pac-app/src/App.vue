@@ -1,25 +1,31 @@
 <template>
   <div>
     <div>
-      <h1 class="text-center text-lg m-8">五子棋 🐲 vs 🐯 争霸赛</h1>
+      <h1 class="text-center text-lg m-8">吃豆子</h1>
     </div>
     <div class="board-container">
-      <div class="board">
+      <div
+        class="board"
+        tabindex="-1"
+        @keypress.a="dealLeft"
+        @keypress.d="dealRight"
+        @keypress.w="dealUp"
+        @keypress.s="dealDown"
+      >
         <div v-for="(row, y) in board" class="row">
-          <div
-            v-for="(col, x) in row"
-            class="coin"
-            @click="setPiece(col, x, y)"
-          >
+          <div v-for="(col, x) in row" class="coin">
             <div
-              v-if="col.color !== EPieceType.empty"
-              :class="`pill ${col.color}`"
-            ></div>
+              :class="`pill ${position[0] === x && position[1] === y ? 'white' : ''}`"
+            >
+              {{ col.toPrecision(4) }}
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="isWin" class="text-center text-lg m-8">{{ userColor }} win!</div>
+    <div class="text-center text-lg m-8">
+      {{ totalReward.toFixed(3) }}
+    </div>
     <div class="text-center text-lg m-8">
       <button @click="reset">reset</button>
     </div>
@@ -30,56 +36,76 @@ import { ref } from 'vue'
 
 import {
   genBoard,
-  EPieceType,
-  IPosition,
-  positionWinCheck,
+  boardSize,
+  getNextState,
+  getReward,
 } from '@template/pac-board'
 
-const board = ref(genBoard())
+const totalReward = ref(0)
 
-const userColor = ref<EPieceType>(EPieceType.black)
+const board = ref(genBoard(boardSize, boardSize))
+
+const position = ref<[number, number]>([0, 0])
+
+function dealLeft(event: KeyboardEvent) {
+  console.log('左')
+
+  const reward = getReward(board.value, position.value, [-1, 0])
+
+  const next = getNextState(board.value, position.value, [-1, 0])
+  position.value = next
+  totalReward.value += reward
+
+  console.log(reward, next)
+}
+
+function dealRight(event: KeyboardEvent) {
+  console.log('右')
+  const reward = getReward(board.value, position.value, [1, 0])
+
+  const next = getNextState(board.value, position.value, [1, 0])
+  position.value = next
+  totalReward.value += reward
+
+  console.log(reward, next)
+}
+
+function dealDown(event: KeyboardEvent) {
+  console.log('下')
+  const reward = getReward(board.value, position.value, [0, 1])
+
+  const next = getNextState(board.value, position.value, [0, 1])
+  position.value = next
+  totalReward.value += reward
+
+  console.log(reward, next)
+}
+
+function dealUp(event: KeyboardEvent) {
+  console.log('上')
+  const reward = getReward(board.value, position.value, [0, -1])
+
+  const next = getNextState(board.value, position.value, [0, -1])
+
+  position.value = next
+  totalReward.value += reward
+
+  console.log(reward, next)
+}
+
 const isWin = ref<boolean>(false)
 
 function reset() {
-  board.value = genBoard()
+  board.value = genBoard(boardSize, boardSize)
 
-  userColor.value = EPieceType.black
   isWin.value = false
 }
-
-function setPiece(col: IPosition, x: number, y: number) {
-  if (isWin.value) {
-    return
-  }
-  if (col.color === EPieceType.empty) {
-    col.color = userColor.value
-
-    const win = positionWinCheck(board.value, x, y)
-    if (win) {
-      isWin.value = win
-      return
-    }
-
-    switch (userColor.value) {
-      case EPieceType.black:
-        userColor.value = EPieceType.white
-        break
-
-      case EPieceType.white:
-      default:
-        userColor.value = EPieceType.black
-        break
-    }
-  }
-}
-
-console.log(board.value)
 </script>
 
 <style lang="css">
 .coin {
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
   position: relative;
 }
 

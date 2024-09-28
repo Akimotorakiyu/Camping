@@ -1,82 +1,48 @@
-export enum EPieceType {
-  'black' = -1,
-  'white' = 1,
-  'empty' = 0,
+export enum EDirection {
+  'STAY' = 0,
+  'INCREASE' = 1,
+  'DECREASE' = -1,
 }
 
-export interface IPosition {
-  color: EPieceType
+export function getReward(
+  mockBoard: number[][],
+  [x, y]: [number, number],
+  [dx, dy]: [EDirection, EDirection],
+) {
+  const r = mockBoard[x + dx]?.[y + dy] ?? -0.1
+  return r
 }
 
-export function genBoard() {
-  const board: IPosition[][] = []
+function valueInRange(min: number, mid: number, max: number) {
+  return Math.min(Math.max(min, mid), max)
+}
 
-  for (let index = 0; index < boardSize; index++) {
-    const row: IPosition[] = []
-    for (let index = 0; index < boardSize; index++) {
-      row.push({
-        color: EPieceType.empty,
-      })
+export function getNextState(
+  mockBoard: number[][],
+  [x, y]: [number, number],
+  [dx, dy]: [EDirection, EDirection],
+): [number, number] {
+  const yLength = mockBoard.length ?? 0
+  const xLength = mockBoard[0]?.length ?? 0
+
+  return [
+    valueInRange(0, x + dx, xLength - 1),
+    valueInRange(0, y + dy, yLength - 1),
+  ]
+}
+
+export function genBoard(x: number, y: number) {
+  const board: number[][] = []
+
+  for (let index = 0; index < x; index++) {
+    const row: number[] = []
+    for (let index = 0; index < y; index++) {
+      row.push(Math.random())
     }
     board.push(row)
   }
 
   return board
-}
-
-export function count(
-  board: IPosition[][],
-  x: number,
-  y: number,
-  [dx, dy]: [number, number],
-  pieceType: EPieceType,
-): number {
-  const piece = board[y][x]
-  if (piece.color === pieceType) {
-    return 1 + count(board, x + dx, y + dy, [dx, dy], pieceType)
-  }
-  return 0
-}
-
-const directions = [
-  [1, 0],
-  [1, 1],
-  [0, 1],
-  [-1, 1],
-]
-
-export function co(
-  board: IPosition[][],
-  x: number,
-  y: number,
-  pieceType: EPieceType,
-) {
-  return directions.some(([dx, dy]) => {
-    const [inversDx, inversDy] = [dx * -1, dy * -1]
-    const piece = board[y][x]
-    if (piece.color === pieceType) {
-      const countNumber =
-        1 +
-        count(board, x + dx, y + dy, [dx, dy], pieceType) +
-        count(
-          board,
-          x + inversDx,
-          y + inversDy,
-          [inversDx, inversDy],
-          pieceType,
-        )
-      if (countNumber >= 5) {
-        return true
-      }
-      return false
-    }
-  })
-}
-
-export function positionWinCheck(board: IPosition[][], x: number, y: number) {
-  const piece = board[y][x]
-
-  return co(board, x, y, piece.color)
 }
 
 export const boardSize = 2
