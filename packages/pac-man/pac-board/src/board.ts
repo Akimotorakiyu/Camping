@@ -17,6 +17,16 @@ function valueInRange(min: number, mid: number, max: number) {
   return Math.min(Math.max(min, mid), max)
 }
 
+export function isOver(mockBoard: number[][], [x, y]: [number, number]) {
+  const yLength = mockBoard.length ?? 0
+  const xLength = mockBoard[0]?.length ?? 0
+
+  const over = yLength - 1 === y && xLength - 1 === x
+  console.log(over)
+
+  return over
+}
+
 export function getNextState(
   mockBoard: number[][],
   [x, y]: [number, number],

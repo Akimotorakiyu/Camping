@@ -26,6 +26,7 @@
     <div class="text-center text-lg m-8">
       {{ totalReward.toFixed(3) }}
     </div>
+    <div v-if="isOverStatus" class="text-center text-lg m-8">over!</div>
     <div class="text-center text-lg m-8">
       <button @click="reset">reset</button>
     </div>
@@ -39,6 +40,7 @@ import {
   boardSize,
   getNextState,
   getReward,
+  isOver,
 } from '@template/pac-board'
 
 const totalReward = ref(0)
@@ -48,11 +50,18 @@ const board = ref(genBoard(boardSize, boardSize))
 const position = ref<[number, number]>([0, 0])
 
 function dealLeft(event: KeyboardEvent) {
+  if (isOverStatus.value) {
+    return
+  }
+
   console.log('左')
 
   const reward = getReward(board.value, position.value, [-1, 0])
 
   const next = getNextState(board.value, position.value, [-1, 0])
+
+  isOverStatus.value = isOver(board.value, next)
+
   position.value = next
   totalReward.value += reward
 
@@ -60,10 +69,15 @@ function dealLeft(event: KeyboardEvent) {
 }
 
 function dealRight(event: KeyboardEvent) {
+  if (isOverStatus.value) {
+    return
+  }
+
   console.log('右')
   const reward = getReward(board.value, position.value, [1, 0])
 
   const next = getNextState(board.value, position.value, [1, 0])
+  isOverStatus.value = isOver(board.value, next)
   position.value = next
   totalReward.value += reward
 
@@ -71,10 +85,15 @@ function dealRight(event: KeyboardEvent) {
 }
 
 function dealDown(event: KeyboardEvent) {
+  if (isOverStatus.value) {
+    return
+  }
+
   console.log('下')
   const reward = getReward(board.value, position.value, [0, 1])
 
   const next = getNextState(board.value, position.value, [0, 1])
+  isOverStatus.value = isOver(board.value, next)
   position.value = next
   totalReward.value += reward
 
@@ -82,10 +101,15 @@ function dealDown(event: KeyboardEvent) {
 }
 
 function dealUp(event: KeyboardEvent) {
+  if (isOverStatus.value) {
+    return
+  }
+
   console.log('上')
   const reward = getReward(board.value, position.value, [0, -1])
 
   const next = getNextState(board.value, position.value, [0, -1])
+  isOverStatus.value = isOver(board.value, next)
 
   position.value = next
   totalReward.value += reward
@@ -93,12 +117,12 @@ function dealUp(event: KeyboardEvent) {
   console.log(reward, next)
 }
 
-const isWin = ref<boolean>(false)
+const isOverStatus = ref<boolean>(false)
 
 function reset() {
   board.value = genBoard(boardSize, boardSize)
 
-  isWin.value = false
+  isOverStatus.value = false
 }
 </script>
 
