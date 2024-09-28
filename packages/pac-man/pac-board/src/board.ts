@@ -56,3 +56,21 @@ export function genBoard(x: number, y: number) {
 }
 
 export const boardSize = 2
+
+export function forwardSetp(
+  board: number[][],
+  position: [number, number],
+  action: [EDirection, EDirection],
+) {
+  const isOverStatus = isOver(board, position)
+
+  if (isOverStatus) {
+    return
+  }
+
+  const reward = getReward(board, position, action)
+
+  const next = getNextState(board, position, action)
+
+  return { next, reward, isOver: false }
+}
